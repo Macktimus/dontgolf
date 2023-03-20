@@ -18,6 +18,7 @@ public class CoursePrefab : MonoBehaviour
 
     public Transform m_CameraPosition;
     public Transform m_SafetySpawn;
+    public Transform m_BallSpawn;
     float m_CameraPositionSpeed = 0.5f;
     Transform m_StartPos, m_EndPos;
     float m_Fraction;
@@ -144,4 +145,10 @@ public class CoursePrefab : MonoBehaviour
             m_Coins.Add(Instantiate(PlayStateManager.Instance.COIN_PREFAB, m_CoinSpawns[x]));
         }
     }
+
+    public Transform GetBallSpawn()
+    {
+        return m_BallSpawn;
+    }
+
 }

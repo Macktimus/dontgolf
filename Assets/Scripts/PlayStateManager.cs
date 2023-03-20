@@ -48,7 +48,7 @@ public class PlayStateManager : MonoBehaviour
         //spawn course
         SpawnFirstCourse();
         //spawn ball
-        m_PlayerBall = Instantiate(BALL_PREFAB).GetComponent<BallControl>();
+        m_PlayerBall = Instantiate(BALL_PREFAB, m_CurrentCourse.GetBallSpawn().position, Quaternion.identity).GetComponent<BallControl>();
     }
 
     void ResetData()
@@ -142,12 +142,15 @@ public class PlayStateManager : MonoBehaviour
         if (m_CurrentCourse != null)
         {
             Destroy(m_CurrentCourse.gameObject);
+            Destroy(m_PlayerBall.gameObject);
         }
         Debug.Log("course counter: " + m_CourseCounter + " course list length: " + COURSE_LIST.Length);
         if( m_CourseCounter < COURSE_LIST.Length )
         {
             m_CurrentCourse = Instantiate(COURSE_LIST[m_CourseCounter]).GetComponent<CoursePrefab>();
             m_CurrentPlayState = PlayStates.Play;
+            m_PlayerBall = Instantiate(BALL_PREFAB, m_CurrentCourse.GetBallSpawn().position, BALL_PREFAB.transform.rotation).GetComponent<BallControl>();
+            m_PlayerBall.ToggleBallRigidbody();
         }
         else
         {
