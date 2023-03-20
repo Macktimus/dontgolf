@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6811491727392686908}
   - component: {fileID: 6811491727392686907}
+  - component: {fileID: 2717009939720554049}
   - component: {fileID: 6811491727392686909}
   - component: {fileID: 6811491727392686910}
   - component: {fileID: 6811491727392686911}
   m_Layer: 0
-  m_Name: Hole
+  m_Name: ScaleHole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +48,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a842dfc12f1864983007f3e96b1bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2717009939720554049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6811491727392686896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b3c6e8df8d2ff438b9eb787520c813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxScale: 1.75
+  m_MinScale: 0.5
+  m_ScaleSpeed: 1.25
 --- !u!33 &6811491727392686909
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,7 +123,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.45
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}

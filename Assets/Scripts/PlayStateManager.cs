@@ -11,6 +11,7 @@ public class PlayStateManager : MonoBehaviour
 
     public GameObject BALL_PREFAB;
     public GameObject HOLE_PREFAB;
+    public GameObject COIN_PREFAB;
     public GameObject[] COURSE_LIST;
     public GameObject m_GameplayUI;
     public GameObject m_LoadScreenUI;
@@ -62,12 +63,26 @@ public class PlayStateManager : MonoBehaviour
     void CleanUpScene()
     {
         ResetData();
-        Destroy(m_CurrentCourse.gameObject);
+        m_GameplayUI.SetActive(false);
+        if( m_CurrentCourse )
+        {
+            Destroy(m_CurrentCourse.gameObject);
+        }
+        if( m_PlayerBall )
+        {
+            Destroy(m_PlayerBall);
+        }
+        
+    }
+
+    public bool CheckBallSleeping()
+    {
+        return m_PlayerBall.CheckBallSleeping();
     }
 
     private void Update()
     {
-        if( m_CurrentPlayState == PlayStates.SpawnNewCourse && m_PlayerBall.CheckBallSleeping() )
+        if( m_CurrentPlayState == PlayStates.SpawnNewCourse && CheckBallSleeping() )
         {
             m_PlayerBall.ToggleBallRigidbody();
             SpawnNextCourse();
@@ -113,7 +128,7 @@ public class PlayStateManager : MonoBehaviour
     public void EnterCourseSpawnState()
     {
         m_CurrentPlayState = PlayStates.SpawnNewCourse;
-        m_CourseCounter++;
+        //m_CourseCounter++;
     }
 
     void SpawnFirstCourse()
@@ -123,13 +138,21 @@ public class PlayStateManager : MonoBehaviour
 
     public void SpawnNextCourse()
     {
+        m_CourseCounter++;
         if (m_CurrentCourse != null)
         {
             Destroy(m_CurrentCourse.gameObject);
         }
-        m_CurrentCourse = Instantiate(COURSE_LIST[m_CourseCounter]).GetComponent<CoursePrefab>();
-        m_CurrentPlayState = PlayStates.Play;
-        m_CourseCounter++;
+        Debug.Log("course counter: " + m_CourseCounter + " course list length: " + COURSE_LIST.Length);
+        if( m_CourseCounter < COURSE_LIST.Length )
+        {
+            m_CurrentCourse = Instantiate(COURSE_LIST[m_CourseCounter]).GetComponent<CoursePrefab>();
+            m_CurrentPlayState = PlayStates.Play;
+        }
+        else
+        {
+            ReturnToMainMenu();
+        }
     }
 
     public void SetObjectiveText( string objective )
@@ -141,4 +164,15 @@ public class PlayStateManager : MonoBehaviour
     {
         m_ObjectiveField.text = "";
     }
+
+    public void CoinAcquired(GameObject coin)
+    {
+        m_CurrentCourse.RemoveCoin(coin);
+    }
+
+    public void BallReturn()
+    {
+        m_PlayerBall.gameObject.transform.position = m_CurrentCourse.m_SafetySpawn.position;
+    }
+
 }

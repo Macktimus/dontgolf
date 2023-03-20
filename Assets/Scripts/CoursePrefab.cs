@@ -5,6 +5,7 @@ using UnityEngine;
 public class CoursePrefab : MonoBehaviour
 {
     public List<Transform> m_HoleSpawnPositions = new List<Transform>();
+    public List<Transform> m_CoinSpawns = new List<Transform>();
     public int m_PuttsToNextCourse;
     public int m_PuttsBetweenHoleSpawns;
     public int m_PuttsBetweenHoleScales;
@@ -12,9 +13,11 @@ public class CoursePrefab : MonoBehaviour
     
 
     List<GameObject> m_Holes = new List<GameObject>();
+    List<GameObject> m_Coins = new List<GameObject>();
     int m_PuttCounter;
 
     public Transform m_CameraPosition;
+    public Transform m_SafetySpawn;
     float m_CameraPositionSpeed = 0.5f;
     Transform m_StartPos, m_EndPos;
     float m_Fraction;
@@ -22,15 +25,23 @@ public class CoursePrefab : MonoBehaviour
     public enum LevelTypes { Practice = 0, Coins, Sequence};
     public LevelTypes m_LevelType = LevelTypes.Practice;
 
+    bool m_SpawnHole = false;
+
     private void Awake()
     {
         if( m_LevelType == LevelTypes.Practice )
         {
             PlayStateManager.Instance.SetObjectiveText("Warm Up Time: " + m_PuttsToNextCourse);
         }
+        else if( m_LevelType == LevelTypes.Coins )
+        {
+            SpawnCoins();
+            m_SpawnHole = true;
+            PlayStateManager.Instance.SetObjectiveText("Collect " + m_Coins.Count + " Coins");
+        }
         else
         {
-            SpawnHole();
+            m_SpawnHole = true;
         }
     }
 
@@ -50,13 +61,20 @@ public class CoursePrefab : MonoBehaviour
             Camera.main.transform.position = Vector3.Lerp(m_StartPos.position, m_EndPos.position, m_Fraction);
             Camera.main.transform.rotation = Quaternion.Lerp(m_StartPos.rotation, m_EndPos.rotation, m_Fraction);
         }
+
+        if( m_SpawnHole && PlayStateManager.Instance.CheckBallSleeping() )
+        {
+            m_SpawnHole = false;
+            SpawnHole();
+        }
     }
 
     void SpawnHole()
     {
         int SpawnLocation = Random.Range(1, m_HoleSpawnPositions.Count)-1;
-        GameObject _hole = Instantiate(PlayStateManager.Instance.HOLE_PREFAB, m_HoleSpawnPositions[SpawnLocation]);
+        GameObject _hole = m_HoleSpawnPositions[SpawnLocation].gameObject; //Instantiate(PlayStateManager.Instance.HOLE_PREFAB, m_HoleSpawnPositions[SpawnLocation]);
         m_Holes.Add(_hole);
+        _hole.GetComponent<AssignedHole>().ActivateHole();
         m_HoleSpawnPositions.Remove(m_HoleSpawnPositions[SpawnLocation]);
     }
 
@@ -75,7 +93,7 @@ public class CoursePrefab : MonoBehaviour
                 foreach (GameObject hole in m_Holes)
                 {
                     Transform _t = hole.transform;
-                    _t.localScale += new Vector3(_HoleScalar, 0, _HoleScalar);
+                    //_t.localScale += new Vector3(_HoleScalar, 0, _HoleScalar);
                 }
             }
 
@@ -83,7 +101,7 @@ public class CoursePrefab : MonoBehaviour
             {
                 if ((m_PuttCounter % m_PuttsBetweenHoleSpawns) == 0)
                 {
-                    SpawnHole();
+                    m_SpawnHole = true;
                 }
             }
         }
@@ -100,6 +118,30 @@ public class CoursePrefab : MonoBehaviour
             {
                 PlayStateManager.Instance.SetObjectiveText("Warm Up Time: " + m_PuttsToNextCourse);
             }
+        }
+        else if (m_LevelType == LevelTypes.Coins)
+        {
+            PlayStateManager.Instance.SetObjectiveText("Collect " + m_Coins.Count + " Coins");
+        }
+    }
+
+    public void RemoveCoin(GameObject coin)
+    {
+        m_Coins.Remove(coin);
+        Destroy(coin);
+        PlayStateManager.Instance.SetObjectiveText("Collect " + m_Coins.Count + " Coins");
+        if (m_Coins.Count <= 0)
+        {
+            //LEVEL COMPLETE!
+            PlayStateManager.Instance.EnterCourseSpawnState();
+        }
+    }
+
+    void SpawnCoins()
+    {
+        for( int x = 0; x < m_CoinSpawns.Count; x++ )
+        {
+            m_Coins.Add(Instantiate(PlayStateManager.Instance.COIN_PREFAB, m_CoinSpawns[x]));
         }
     }
 }

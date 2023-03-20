@@ -484,7 +484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HoleSpawnPositions:
   - {fileID: 5369582603296155165}
-  m_PuttsToNextCourse: 5
+  m_CoinSpawns: []
+  m_PuttsToNextCourse: 3
   m_PuttsBetweenHoleSpawns: 0
   m_PuttsBetweenHoleScales: 2
   m_ScaleFactor: 1
