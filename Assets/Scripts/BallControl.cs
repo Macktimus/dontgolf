@@ -96,7 +96,15 @@ public class BallControl : MonoBehaviour
 
     public bool CheckBallSleeping()
     {
-        return m_BallRB.IsSleeping();
+        if( m_BallRB )
+        {
+            return m_BallRB.IsSleeping();
+        }
+        else
+        {
+            return false;
+        }
+        
     }
 
     public void ToggleBallRigidbody()

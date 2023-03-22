@@ -8,7 +8,7 @@ public class BallReturn : MonoBehaviour
     {
         if(collision.gameObject.tag == "PlayerBall")
         {
-            PlayStateManager.Instance.BallReturn();
+            PlayStateManager.Instance.BallReturn(collision.gameObject);
         }
         else
         {
