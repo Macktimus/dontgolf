@@ -9,14 +9,20 @@ public class PlayStateManager : MonoBehaviour
     public enum PlayStates { Starting = 0, Loading, Play, SpawnNewCourse, Stay, Pause, Summary};
     public PlayStates m_CurrentPlayState = PlayStates.Starting;
 
+    [Header("UI References and Managers")]
+    public BallLivesUI BALL_LIVES_UI;
+    public GameObject m_GameplayUI;
+    public GameObject m_LoadScreenUI;
+    public GameObject m_EndGameUI;
+
+    [Header("Stuff")]
     public GameObject BALL_PREFAB;
     public GameObject HOLE_PREFAB;
     public GameObject COIN_PREFAB;
     public GameObject[] COURSE_LIST;
-    public GameObject m_GameplayUI;
-    public GameObject m_LoadScreenUI;
+    
     public TextMeshProUGUI m_ObjectiveField;
-    public GameObject m_EndGameUI;
+    
 
     List<BallControl> m_PlayerBall = new List<BallControl>();
     CoursePrefab m_CurrentCourse;
@@ -124,14 +130,17 @@ public class PlayStateManager : MonoBehaviour
     {
         m_PlayerBall.Remove(playerBall.GetComponent<BallControl>());
         Destroy(playerBall);
-        if( m_SafetyActivated )
+        if( m_SafetyActivated && m_PlayerBall.Count <= 0)
         {
             SpawnBall();
         }
-        m_GameplayUI.SetActive(false);
-        m_CurrentPlayState = PlayStates.Summary;
-        //trigger end state UI
-        m_EndGameUI.SetActive(true);
+        else if( m_PlayerBall.Count <= 0 )
+        {
+            m_GameplayUI.SetActive(false);
+            m_CurrentPlayState = PlayStates.Summary;
+            //trigger end state UI
+            m_EndGameUI.SetActive(true);
+        }
     }
 
     void KillBallSilently()
