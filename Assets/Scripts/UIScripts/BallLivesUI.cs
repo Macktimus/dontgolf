@@ -8,6 +8,11 @@ public class BallLivesUI : MonoBehaviour
 
     int m_LivesRemaining = 0;
 
+    private void Awake()
+    {
+        ClearLives();
+    }
+
     public void SetupLives(int lives)
     {
         m_LivesRemaining = lives;

@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentPlayState: 0
-  BALL_LIVES_UI: {fileID: 0}
+  BALL_LIVES_UI: {fileID: 701012875}
   m_GameplayUI: {fileID: 1056305198}
   m_LoadScreenUI: {fileID: 71711283}
   m_EndGameUI: {fileID: 1941853598}

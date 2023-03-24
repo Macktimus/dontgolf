@@ -58,6 +58,7 @@ public class PlayStateManager : MonoBehaviour
         SpawnFirstCourse();
         //spawn ball
         SpawnBall();
+        //SpawnNextCourse();
     }
 
     void SpawnBall()
@@ -130,16 +131,25 @@ public class PlayStateManager : MonoBehaviour
     {
         m_PlayerBall.Remove(playerBall.GetComponent<BallControl>());
         Destroy(playerBall);
-        if( m_SafetyActivated && m_PlayerBall.Count <= 0)
+        
+        if( m_SafetyActivated )//&& m_PlayerBall.Count <= 0)
         {
             SpawnBall();
         }
-        else if( m_PlayerBall.Count <= 0 )
+        else if(m_PlayerBall.Count <= 0 )
         {
-            m_GameplayUI.SetActive(false);
-            m_CurrentPlayState = PlayStates.Summary;
-            //trigger end state UI
-            m_EndGameUI.SetActive(true);
+            m_PlayerLives = BALL_LIVES_UI.SubtractLife();            
+            if( m_PlayerLives < 0 )
+            {
+                m_GameplayUI.SetActive(false);
+                m_CurrentPlayState = PlayStates.Summary;
+                //trigger end state UI
+                m_EndGameUI.SetActive(true);
+            }
+            else
+            {
+                SpawnBall();
+            }
         }
     }
 
@@ -193,6 +203,18 @@ public class PlayStateManager : MonoBehaviour
         {
             m_CurrentCourse = Instantiate(COURSE_LIST[m_CourseCounter]).GetComponent<CoursePrefab>();
             m_CurrentPlayState = PlayStates.Play;
+            m_PlayerLives = m_CurrentCourse.m_PlayerLives;
+            
+            if( m_PlayerLives > 0 )
+            {
+                m_SafetyActivated = false;
+                BALL_LIVES_UI.SetupLives(m_PlayerLives);
+            }
+            else
+            {
+                m_SafetyActivated = true;
+                BALL_LIVES_UI.SetupLives(0);
+            }
             SpawnBall();
             //TogglePlayerBallRigidbody();
         }

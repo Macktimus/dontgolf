@@ -10,6 +10,8 @@ public class CoursePrefab : MonoBehaviour
     public int m_PuttsBetweenHoleSpawns;
     public int m_PuttsBetweenHoleScales;
     public float m_ScaleFactor;
+
+    public int m_PlayerLives = 0;
     
 
     List<GameObject> m_Holes = new List<GameObject>();

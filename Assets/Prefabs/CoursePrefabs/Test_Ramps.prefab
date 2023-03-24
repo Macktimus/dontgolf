@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309966844103363136}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.93, y: 5.5, z: 3.84}
+  m_LocalPosition: {x: 8.06, y: 5.5, z: 3.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1749,6 +1749,7 @@ MonoBehaviour:
   m_PuttsBetweenHoleSpawns: 2
   m_PuttsBetweenHoleScales: 1
   m_ScaleFactor: 1
+  m_PlayerLives: 3
   m_CameraPosition: {fileID: 8538587278712531440}
   m_SafetySpawn: {fileID: 774898517345761678}
   m_BallSpawn: {fileID: 143232541203619659}
