@@ -861,12 +861,15 @@ MonoBehaviour:
   COIN_PREFAB: {fileID: 3236097953535149508, guid: 655dfe9a2841b6f4b9667c56bee6b621,
     type: 3}
   COURSE_LIST:
-  - {fileID: 5369582603748349171, guid: f62cbe8e09b4d9841a266607d5699370, type: 3}
-  - {fileID: 8791534971854904294, guid: 7bb6a60ca2a75df4a979cf1276220e67, type: 3}
   - {fileID: 8791534971854904294, guid: 7a8bb4bb8b39bb342970ead90f108550, type: 3}
+  - {fileID: 5369582603748349171, guid: f62cbe8e09b4d9841a266607d5699370, type: 3}
+  - {fileID: 8791534971854904294, guid: 42511290006649a4d9809fce928b6b9f, type: 3}
   m_ObjectiveField: {fileID: 762070642}
   m_PuttCountLabel: {fileID: 791515261}
   m_PowerSlider: {fileID: 856324378}
+  PUTT_MADE:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &387182398
 Transform:
   m_ObjectHideFlags: 0
@@ -2586,7 +2589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1056305199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2982,7 +2985,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class PlayStateManager : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class PlayStateManager : MonoBehaviour
 
     int m_PlayerLives;
     bool m_SafetyActivated = false;
+
+    public UnityEvent PUTT_MADE = new UnityEvent();
 
     private static PlayStateManager _instance;
     public static PlayStateManager Instance
@@ -173,6 +176,7 @@ public class PlayStateManager : MonoBehaviour
 
     public void IncrementPutts(float puttForce)
     {
+        PUTT_MADE.Invoke();
         m_PuttCounter++;
         m_PuttCountLabel.text = m_PuttCounter.ToString();
         m_CurrentCourse.IncrementPutts(puttForce);

@@ -90,7 +90,7 @@ public class CoursePrefab : MonoBehaviour
         }*/
         if( m_LevelType != LevelTypes.Practice )
         {
-            if ((m_PuttCounter % m_PuttsBetweenHoleScales) == 0)
+            /*if ((m_PuttCounter % m_PuttsBetweenHoleScales) == 0)
             {
                 float _HoleScalar = m_ScaleFactor * (1 - (puttForce / 3));
                 foreach (GameObject hole in m_Holes)
@@ -106,7 +106,7 @@ public class CoursePrefab : MonoBehaviour
                 {
                     m_SpawnHole = true;
                 }
-            }
+            }*/
         }
 
         if (m_LevelType == LevelTypes.Practice)
