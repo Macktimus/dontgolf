@@ -168,6 +168,7 @@ public class PlayStateManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         m_EndGameUI.SetActive(false);
+        BALL_LIVES_UI.ClearLives();
         CleanUpScene();
         GameStateManager.Instance.LoadMainMenu();
     }

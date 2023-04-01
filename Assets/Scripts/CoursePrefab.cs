@@ -25,7 +25,7 @@ public class CoursePrefab : MonoBehaviour
     Transform m_StartPos, m_EndPos;
     float m_Fraction;
 
-    public enum LevelTypes { Practice = 0, Coins, Sequence};
+    public enum LevelTypes { Practice = 0, Coins, Sequence, Survive};
     public LevelTypes m_LevelType = LevelTypes.Practice;
 
     bool m_SpawnHole = false;
@@ -41,6 +41,10 @@ public class CoursePrefab : MonoBehaviour
             SpawnCoins();
             m_SpawnHole = true;
             PlayStateManager.Instance.SetObjectiveText("Collect " + m_Coins.Count + " Coins");
+        }
+        else if (m_LevelType == LevelTypes.Survive)
+        {
+            PlayStateManager.Instance.SetObjectiveText("Putt " + m_PuttsToNextCourse + " Times");
         }
         else
         {
@@ -68,7 +72,7 @@ public class CoursePrefab : MonoBehaviour
         if( m_SpawnHole && PlayStateManager.Instance.CheckBallSleeping() )
         {
             m_SpawnHole = false;
-            SpawnHole();
+            //SpawnHole();
         }
     }
 
@@ -125,6 +129,19 @@ public class CoursePrefab : MonoBehaviour
         else if (m_LevelType == LevelTypes.Coins)
         {
             PlayStateManager.Instance.SetObjectiveText("Collect " + m_Coins.Count + " Coins");
+        }
+        else if (m_LevelType == LevelTypes.Survive)
+        {
+            m_PuttsToNextCourse--;
+            if (m_PuttsToNextCourse <= 0)
+            {
+                //LEVEL COMPLETE!
+                PlayStateManager.Instance.EnterCourseSpawnState();
+            }
+            else
+            {
+                PlayStateManager.Instance.SetObjectiveText("Putt " + m_PuttsToNextCourse + " Times");
+            }
         }
     }
 
