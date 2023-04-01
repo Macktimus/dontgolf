@@ -20,12 +20,12 @@ public class PlayStateManager : MonoBehaviour
     public GameObject BALL_PREFAB;
     public GameObject HOLE_PREFAB;
     public GameObject COIN_PREFAB;
-    public GameObject[] COURSE_LIST;
     
     public TextMeshProUGUI m_ObjectiveField;
     
 
     List<BallControl> m_PlayerBall = new List<BallControl>();
+    public CourseManager m_CurrentCourseManager;
     CoursePrefab m_CurrentCourse;
 
     public TextMeshProUGUI m_PuttCountLabel;
@@ -192,8 +192,11 @@ public class PlayStateManager : MonoBehaviour
 
     void SpawnFirstCourse()
     {
-        m_CurrentCourse = Instantiate(COURSE_LIST[0]).GetComponent<CoursePrefab>();
+        //m_CurrentCourse = Instantiate(COURSE_LIST[0]).GetComponent<CoursePrefab>();
+        m_CurrentCourse = Instantiate(m_CurrentCourseManager.GetCourse(m_CourseCounter)).GetComponent<CoursePrefab>();
+        m_PlayerLives = m_CurrentCourseManager.GetLives();
         m_CourseCounter++;
+        BALL_LIVES_UI.SetupLives(m_PlayerLives);
     }
 
     public void SpawnNextCourse()
@@ -204,11 +207,11 @@ public class PlayStateManager : MonoBehaviour
             KillBallSilently();
         }
         //Debug.Log("course counter: " + m_CourseCounter + " course list length: " + COURSE_LIST.Length);
-        if( m_CourseCounter < COURSE_LIST.Length )
+        if( m_CourseCounter <= m_CurrentCourseManager.GetCourseLength() )
         {
-            m_CurrentCourse = Instantiate(COURSE_LIST[m_CourseCounter]).GetComponent<CoursePrefab>();
+            m_CurrentCourse = Instantiate(m_CurrentCourseManager.GetCourse(m_CourseCounter)).GetComponent<CoursePrefab>();
             m_CurrentPlayState = PlayStates.Play;
-            m_PlayerLives = m_CurrentCourse.m_PlayerLives;
+            //m_PlayerLives = m_CurrentCourse.m_PlayerLives;
             
             if( m_PlayerLives > 0 )
             {

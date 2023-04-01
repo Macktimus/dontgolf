@@ -860,12 +860,9 @@ MonoBehaviour:
     type: 3}
   COIN_PREFAB: {fileID: 3236097953535149508, guid: 655dfe9a2841b6f4b9667c56bee6b621,
     type: 3}
-  COURSE_LIST:
-  - {fileID: 5369582603748349171, guid: f8d5d69ef322ef9499598d1bdb915dea, type: 3}
-  - {fileID: 5369582603748349171, guid: 1b4d2c51febe3504a98a68363600f318, type: 3}
-  - {fileID: 5369582603748349171, guid: a3b24949b0d160d4f853997ee3776bbc, type: 3}
-  - {fileID: 5369582603748349171, guid: 42075c156a985e246aa9dc76f5f04bd3, type: 3}
   m_ObjectiveField: {fileID: 762070642}
+  m_CurrentCourseManager: {fileID: 7605529581696046349, guid: 7a4079b23968e3c4eb17a0bdeb6d6cad,
+    type: 3}
   m_PuttCountLabel: {fileID: 791515261}
   m_PowerSlider: {fileID: 856324378}
   PUTT_MADE:
